@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  poc-db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: poc
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d poc"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
